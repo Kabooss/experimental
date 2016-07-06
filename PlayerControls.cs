@@ -24,10 +24,10 @@ public class PlayerControls : MonoBehaviour
 
                 float dist = Vector3.Distance(new Vector3(x, 0, z), new Vector3(width/2, 0, height/2));
 
-                float xDistance = Vector3.Distance(new Vector3(x, 0, z), new Vector3(width/2, 0, z));
-                float zDistance = Vector3.Distance(new Vector3(x, 0, z), new Vector3(x, 0, height/2));
+                float xDistance = Vector3.Distance(new Vector3(x, 0, height/2), new Vector3(width/2, 0, z));
+                float zDistance = Vector3.Distance(new Vector3(width/2, 0, z), new Vector3(x, 0, height/2));
 
-                if ((xDistance>width/4)||(zDistance>height/4))
+                if ((xDistance>height/2)||(zDistance>width/2))
                 {
 
                     float lerpedPNoiseVal = (getLerpXDistance(x, z) + getLerpZDistance(x, z));
@@ -46,22 +46,22 @@ public class PlayerControls : MonoBehaviour
 
     float getLerpXDistance(int x, int z)
     {
-        float xDist = Vector3.Distance(new Vector3(x, 0, z), new Vector3(width/2, 0, z));
+        float xDist = Vector3.Distance(new Vector3(x, 0, height/2), new Vector3(width/2, 0, z));
         // Work out the distance from x to z max
-        float scaledXDist = (xDist / (height / 2));
+        float scaledXDist = (xDist / (width / 2));
         // scale down into 0->1 range.
-        float LerpXDistance = Mathf.Lerp(0.5f, 0, scaledXDist);
+        float LerpXDistance = Mathf.Lerp(0.4f, 0, scaledXDist);
         //invert the result from the scale using lerp
         return (LerpXDistance*amplitude);
     }
 
     float getLerpZDistance(int x, int z)
     {
-        float zDist = Vector3.Distance(new Vector3(x, 0, z), new Vector3(x, 0, height/2));
+        float zDist = Vector3.Distance(new Vector3(width/2, 0, z), new Vector3(x, 0, height/2));
         // Work out the distance from x to z max
-        float scaledZDist = (zDist / (width / 2));
+        float scaledZDist = (zDist / (height / 2));
         // scale down into 0->1 range.
-        float LerpZDistance = Mathf.Lerp(0.6f, 0, scaledZDist);
+        float LerpZDistance = Mathf.Lerp(0.4f, 0, scaledZDist);
         //invert the result from the scale using lerp
         return (LerpZDistance*amplitude);
     }
