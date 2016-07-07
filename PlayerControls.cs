@@ -32,11 +32,14 @@ public class PlayerControls : MonoBehaviour
                     
                     float lerpedPNoiseVal = (getLerpXDistance(x, z) + getLerpZDistance(x, z));
                     pNoiseVal = (pNoiseVal + lerpedPNoiseVal) / 2;
-                   pNoiseVal = Mathf.Clamp(pNoiseVal, 0.0f, 0.7f*amplitude);
-                   
-                    if (pNoiseVal < (0.8f*amplitude ))
+                   //pNoiseVal = Mathf.Clamp(pNoiseVal, 0.0f, 0.8f*amplitude);
+
+                    if (pNoiseVal >= (0.8f * amplitude))
                     {
-                        pNoiseVal = pNoiseVal - 0.1f;
+                        while (pNoiseVal > 0.7*amplitude)
+                        {
+                            pNoiseVal = pNoiseVal - 0.1f;
+                        }
                     }
 
                    /* 
@@ -52,7 +55,7 @@ public class PlayerControls : MonoBehaviour
                 
                 }
 
-                if (pNoiseVal > 0.8f) {
+                if (pNoiseVal > (0.5f)*amplitude) {
                     Instantiate(grassTile, new Vector3(x, pNoiseVal, z), grassTile.transform.rotation);
                 } else {
                     Instantiate(waterTile, new Vector3(x, pNoiseVal, z), waterTile.transform.rotation);
