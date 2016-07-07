@@ -56,9 +56,9 @@ public class PlayerControls : MonoBehaviour
                 }
 
                 if (pNoiseVal > (0.5f)*amplitude) {
-                    Instantiate(grassTile, new Vector3(x, pNoiseVal, z), grassTile.transform.rotation);
+                    Instantiate(grassTile, new Vector3(x, 0, z), grassTile.transform.rotation);
                 } else {
-                    Instantiate(waterTile, new Vector3(x, pNoiseVal, z), waterTile.transform.rotation);
+                    Instantiate(waterTile, new Vector3(x, 0, z), waterTile.transform.rotation);
                 }
             }
         }
