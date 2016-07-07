@@ -22,17 +22,34 @@ public class PlayerControls : MonoBehaviour
                 float sampleZ = z / scale;
                 float pNoiseVal = Mathf.PerlinNoise(sampleX, sampleZ) * amplitude;
 
-                float dist = Vector3.Distance(new Vector3(x, 0, z), new Vector3(width/2, 0, height/2));
+               // float dist = Vector3.Distance(new Vector3(x, 0, z), new Vector3(width/2, 0, height/2));
 
                 float xDistance = Vector3.Distance(new Vector3(x, 0, height/2), new Vector3(width/2, 0, z));
                 float zDistance = Vector3.Distance(new Vector3(width/2, 0, z), new Vector3(x, 0, height/2));
 
-                if ((xDistance>height/2)||(zDistance>width/2))
+                if ((xDistance>(height/3))||(zDistance>width/3))
                 {
-
+                    
                     float lerpedPNoiseVal = (getLerpXDistance(x, z) + getLerpZDistance(x, z));
                     pNoiseVal = (pNoiseVal + lerpedPNoiseVal) / 2;
-                   //pNoiseVal = Mathf.Clamp(pNoiseVal, 0.0f, 0.5f);
+                   pNoiseVal = Mathf.Clamp(pNoiseVal, 0.0f, 0.7f*amplitude);
+                   
+                    if (pNoiseVal < (0.8f*amplitude ))
+                    {
+                        pNoiseVal = pNoiseVal - 0.1f;
+                    }
+
+                   /* 
+                    if(x > xDistance - 8)
+                    {
+                        pNoiseVal = Mathf.Clamp(pNoiseVal, 0.0f, 0.8f);
+                    }
+                    if (z > zDistance - 8)
+                    {
+                        pNoiseVal = Mathf.Clamp(pNoiseVal, 0.0f, 0.8f);
+                    }    
+                    */
+                
                 }
 
                 if (pNoiseVal > 0.8f) {
@@ -50,7 +67,7 @@ public class PlayerControls : MonoBehaviour
         // Work out the distance from x to z max
         float scaledXDist = (xDist / (width / 2));
         // scale down into 0->1 range.
-        float LerpXDistance = Mathf.Lerp(0.4f, 0, scaledXDist);
+        float LerpXDistance = Mathf.Lerp(0.6f, 0, scaledXDist);
         //invert the result from the scale using lerp
         return (LerpXDistance*amplitude);
     }
@@ -61,7 +78,7 @@ public class PlayerControls : MonoBehaviour
         // Work out the distance from x to z max
         float scaledZDist = (zDist / (height / 2));
         // scale down into 0->1 range.
-        float LerpZDistance = Mathf.Lerp(0.4f, 0, scaledZDist);
+        float LerpZDistance = Mathf.Lerp(0.6f, 0, scaledZDist);
         //invert the result from the scale using lerp
         return (LerpZDistance*amplitude);
     }
